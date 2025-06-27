@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-etudiant-list',
   standalone: true,
   imports: [],
   templateUrl: './etudiant-list.component.html',
-  styleUrl: './etudiant-list.component.scss'
+  styleUrl: './etudiant-list.component.scss',
 })
-export class EtudiantListComponent {
+export class EtudiantListComponent implements OnInit {
+  ngOnInit(): void {}
 
+  constructor(private cookieService: CookieService) {}
+
+  logOut() {
+    this.cookieService.delete('accessToken');
+  }
 }

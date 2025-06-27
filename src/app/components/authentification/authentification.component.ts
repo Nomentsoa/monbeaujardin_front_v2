@@ -15,7 +15,7 @@ export class AuthentificationComponent implements OnInit {
   constructor(private authentificationService: AuthentificationService) {}
 
   doAuthentification() {
-    this.authentificationService.getToken({
+    this.authentificationService.doAuthentification({
       username: 'laza',
       password: 'admin',
       withRefreshToken: false,
