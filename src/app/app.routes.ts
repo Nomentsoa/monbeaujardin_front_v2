@@ -3,17 +3,23 @@ import { AuthentificationComponent } from './components/authentification/authent
 import { EtudiantItemComponent } from './components/etudiant/etudiant-item/etudiant-item.component';
 import { guardGuard } from './guards/guard.guard';
 import { EtudiantListComponent } from './components/etudiant/etudiant-list/etudiant-list.component';
+import { PrincipalComponent } from './principal/principal.component';
 
 export const routes: Routes = [
-  { path: 'authentification', component: AuthentificationComponent },
+  { path: '', component: AuthentificationComponent },
   {
-    path: 'etudiant',
-    component: EtudiantItemComponent,
+    path: 'pricipal',
+    component: PrincipalComponent,
     canActivate: [guardGuard],
-  },
-  {
-    path: 'etudiantList',
-    component: EtudiantListComponent,
-    canActivate: [guardGuard],
+    children: [
+      {
+        path: 'etudiant',
+        component: EtudiantItemComponent,
+      },
+      {
+        path: 'etudiantList',
+        component: EtudiantListComponent,
+      },
+    ],
   },
 ];

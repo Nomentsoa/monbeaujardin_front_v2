@@ -17,7 +17,7 @@ export class AuthentificationComponent implements OnInit {
   doAuthentification() {
     this.authentificationService.doAuthentification({
       username: 'laza',
-      password: 'admin',
+      password: 'laza',
       withRefreshToken: false,
       grantType: 'password',
     });

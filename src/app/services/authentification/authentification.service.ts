@@ -29,7 +29,7 @@ export class AuthentificationService {
         next: (value) => {
           console.log('la valeur du token est: ' + value.accessToken);
           this.accessToken = value.accessToken;
-          this.router.navigate(['etudiant']);
+          this.router.navigate(['pricipal/etudiant']);
           this.cookieService.set('accessToken', this.accessToken, {
             sameSite: 'Strict',
             secure: true,
