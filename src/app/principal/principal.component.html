@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg" style="background-color: rgb(31, 170, 70); color: white;">
+<nav class="navbar navbar-expand-lg"
+    style="background-image: linear-gradient(to right, rgb(38, 215, 68), rgb(11, 87, 68));; color: white;">
     <div class="container-fluid">
-        <a class="navbar-brand nav-text" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,10 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active nav-text" aria-current="page" href="">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-text" href="">Link</a>
+                    <a class="nav-link active nav-text" aria-current="page" href="">MBJ</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle nav-text" href="#" role="button" data-bs-toggle="dropdown"
@@ -19,19 +16,26 @@
                         Etudiants
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">List des étudiant</a></li>
-                        <li><a class="dropdown-item" href="#">Ajout nouvel étudiant</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" routerLink="/principal/etudiantList"
+                                routerLinkActive="router-link-active">List des étudiant</a></li>
+                        <li><a class="dropdown-item" routerLink="/principal/etudiantAjout">Ajout nouvel étudiant</a>
                         </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    <a class="nav-link disabled" aria-disabled="true">Enseignants</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Ecolages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Notes</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
+            <!-- <form class="d-flex" role="search">
                 <div class="input-group border rounded-pill" style="background-color: white;">
                     <span class="input-group-prepend mt-2 ms-2 me-1">
                         <i class="bi bi-search" style="color: black ;"></i>
@@ -39,9 +43,19 @@
                     <input class="form-control me-2 border-0 rounded-end" type="search" placeholder="Recherche"
                         id="example-search-input">
                 </div>
-            </form>
+            </form> -->
 
-            <img src="" class="rounded-circle" alt="">
+
+            <div class="dropdown mt-2 mb-2 dropstart" style="padding-right: 5px;">
+                <a class="nav-link nav-text" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="profil.png" class="rounded-circle" alt="profil Utilisateur" width="50px" height="50px">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" routerLink="/principal/etudiantList"
+                            routerLinkActive="router-link-active">Profil</a></li>
+                    <li><a class="dropdown-item" (click)="onLogOut()">Deconnexion</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>

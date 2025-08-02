@@ -4,11 +4,13 @@ import { EtudiantItemComponent } from './components/etudiant/etudiant-item/etudi
 import { guardGuard } from './guards/guard.guard';
 import { EtudiantListComponent } from './components/etudiant/etudiant-list/etudiant-list.component';
 import { PrincipalComponent } from './principal/principal.component';
+import { EtudiantAjoutComponent } from './components/etudiant/etudiant-ajout/etudiant-ajout.component';
+import { matriculResolver } from './resolvers/matricul.resolver';
 
 export const routes: Routes = [
   { path: '', component: AuthentificationComponent },
   {
-    path: 'pricipal',
+    path: 'principal',
     component: PrincipalComponent,
     canActivate: [guardGuard],
     children: [
@@ -19,6 +21,13 @@ export const routes: Routes = [
       {
         path: 'etudiantList',
         component: EtudiantListComponent,
+      },
+      {
+        path: 'etudiantAjout',
+        component: EtudiantAjoutComponent,
+        resolve: {
+          dernierMatricul: matriculResolver,
+        },
       },
     ],
   },

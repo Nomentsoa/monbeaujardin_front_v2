@@ -12,8 +12,4 @@ export class EtudiantListComponent implements OnInit {
   ngOnInit(): void {}
 
   constructor(private cookieService: CookieService) {}
-
-  logOut() {
-    this.cookieService.delete('accessToken');
-  }
 }

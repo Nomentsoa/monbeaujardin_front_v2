@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
+import { provideToastr } from 'ngx-toastr';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideHttpClient(withInterceptors([authInterceptor])),
     CookieService,
+    provideToastr(),
+    provideNoopAnimations(),
   ],
 };

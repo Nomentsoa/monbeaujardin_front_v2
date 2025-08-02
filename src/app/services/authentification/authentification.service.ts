@@ -4,7 +4,6 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { AccessToken } from '../../models/authentification/accessToken.model';
 import { RequestToken } from '../../models/authentification/requestToken.model';
-import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -12,35 +11,22 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthentificationService {
   accessToken!: string;
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private cookieService: CookieService
-  ) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  doAuthentification(requestToken: RequestToken) {
+  doAuthentification(requestToken: RequestToken): Observable<AccessToken> {
     console.log(requestToken);
-    this.http
-      .post<AccessToken>(
-        `${environment.apiUrlAuthentification}/token`,
-        requestToken
-      )
-      .subscribe({
-        next: (value) => {
-          console.log('la valeur du token est: ' + value.accessToken);
-          this.accessToken = value.accessToken;
-          this.router.navigate(['pricipal/etudiant']);
-          this.cookieService.set('accessToken', this.accessToken, {
-            sameSite: 'Strict',
-            secure: true,
-          });
-        },
-        error: (err) =>
-          console.log('erreur sur la recuperation du token: ' + err),
-      });
+    return this.http.post<AccessToken>(
+      `${environment.apiUrlAuthentification}/token`,
+      requestToken
+    );
+  }
+
+  setToken(token: string) {
+    this.accessToken = token;
   }
 
   getToken(): string {
+    this.accessToken = this.cookieService.get('accessToken');
     return this.accessToken;
   }
 }
