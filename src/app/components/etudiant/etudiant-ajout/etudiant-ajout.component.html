@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="row">
                     <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'matriculEtudiant'"
-                        [messageErreur]="matriculErreur" [label]="'Numéro matricul'" />
+                        [messageErreur]="matriculErreur" [label]="'Numéro matricul'" [type]="'number'" />
                 </div>
 
                 <div class="row mt-2">
@@ -34,6 +34,9 @@
                             }
                         </select>
                     </div>
+                    <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'nombreFraternite'"
+                        [messageErreur]="''" [label]="'Nombre de frère et de soeur'" [maxLength]="2"
+                        [type]="'number'" />
                 </div>
                 <div class="row mt-2">
                     <app-input-mbj [form]="mainForm" [formControlNameMBJ]="'adresseEtudiant'"
@@ -55,7 +58,8 @@
                     <app-input-mbj class="col-4" [form]="mereFormGroup" [formControlNameMBJ]="'nomMere'"
                         [messageErreur]="nomMereErreur" [label]="'Nom complet Mére'" />
                     <app-input-mbj class="col-4" [form]="mereFormGroup" [formControlNameMBJ]="'telephoneMere'"
-                        [messageErreur]="telephoneMereErreur" [label]="'Téléphone Mére'" [maxLength]="10" />
+                        [messageErreur]="telephoneMereErreur" [label]="'Téléphone Mére'" [maxLength]="10"
+                        [type]="'number'" />
                     <app-input-mbj class="col-4" [form]="mereFormGroup" [formControlNameMBJ]="'professionMere'"
                         [messageErreur]="''" [label]="'Profession Mére'" />
                 </div>
@@ -76,7 +80,8 @@
                     <app-input-mbj class="col-4" [form]="pereFormGroup" [formControlNameMBJ]="'nomPere'"
                         [messageErreur]="nomPereErreur" [label]="'Nom complet Pére'" />
                     <app-input-mbj class="col-4" [form]="pereFormGroup" [formControlNameMBJ]="'telephonePere'"
-                        [messageErreur]="telephonePereErreur" [label]="'Téléphone Pére'" [maxLength]="10" />
+                        [messageErreur]="telephonePereErreur" [label]="'Téléphone Pére'" [maxLength]="10"
+                        [type]="'number'" />
                     <app-input-mbj class="col-4" [form]="pereFormGroup" [formControlNameMBJ]="'professionPere'"
                         [messageErreur]="''" [label]="'Profession Pére'" />
                 </div>
@@ -88,7 +93,8 @@
                     <app-input-mbj class="col-4" [form]="tuteurFormGroup" [formControlNameMBJ]="'nomTuteur'"
                         [messageErreur]="nomTuteurErreur" [label]="'Nom complet Tuteur(rice)'" />
                     <app-input-mbj class="col-4" [form]="tuteurFormGroup" [formControlNameMBJ]="'telephoneTuteur'"
-                        [messageErreur]="telephoneTuteurErreur" [label]="'Téléphone Tuteur(rice)'" [maxLength]="10" />
+                        [messageErreur]="telephoneTuteurErreur" [label]="'Téléphone Tuteur(rice)'" [maxLength]="10"
+                        [type]="'number'" />
                     <app-input-mbj class="col-4" [form]="tuteurFormGroup" [formControlNameMBJ]="'professionTuteur'"
                         [messageErreur]="''" [label]="'Profession Tuteur(rice)'" />
                 </div>

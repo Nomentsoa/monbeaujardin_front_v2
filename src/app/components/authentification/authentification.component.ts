@@ -75,7 +75,7 @@ export class AuthentificationComponent implements OnInit {
           next: (value) => {
             console.log('la valeur du token est: ' + value.accessToken);
             this.authentificationService.setToken(value.accessToken);
-            this.router.navigate(['principal/etudiant']);
+            this.router.navigate(['principal/etudiantList']);
             this.cookieService.set('accessToken', value.accessToken, {
               sameSite: 'Strict',
               secure: true,

@@ -21,4 +21,5 @@ export class InputMBJComponent {
   @Input() messageErreur!: string;
   @Input() label!: string;
   @Input() maxLength: number = 250;
+  @Input() type: string = 'text';
 }

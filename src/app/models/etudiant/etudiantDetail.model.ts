@@ -16,4 +16,5 @@ export interface EtudiantDetail {
   telephoneTuteur: string;
   professionTuteur: string;
   noteSupplementaire: string;
+  nombreFraternite: number;
 }

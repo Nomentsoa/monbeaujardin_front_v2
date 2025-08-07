@@ -1,3 +1,103 @@
-<p>etudiant-list works!</p>
-<button>Logout</button>
-<img src="profil.png" class="rounded-circle" alt="profil Utilisateur" width="50px" height="50px">
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active">Liste des Etudiants</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control"
+                placeholder="Tapez ici le numero matricule ou nom ou prenom(s) à rechercher" [(ngModel)]="recherche">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="onCherche()">Chercher</button>
+            </div>
+        </div>
+        @if(pagedEtudiantListObservable$ | async ; as pagedEtudiantList; ){
+
+        <table class="table table-striped">
+            <thead class="text-center">
+                <tr>
+                    <th class="col-1">Numero Matricule</th>
+                    <th class="col-4">Nom</th>
+                    <th class="col-4">Prénom(s)</th>
+                    <th class="col-2">date de naissance</th>
+                    <th class="col-1">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-center align-items-center">
+
+
+
+                @for(etudiant of pagedEtudiantList.etudiants ; track etudiant.matricule){
+                <tr>
+                    <th scope="row"> {{ etudiant.matricule }}</th>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.dateNaissance }}</td>
+                    <td>
+                        <a href="" style="color: rgb(17, 152, 29);"><i class="bi bi-eye h3" data-placement="bottom"
+                                title="Voir détail étudiant"></i></a>
+                        <a href="" class="ms-2" style="color: rgb(213, 14, 14);"><i class="bi bi-trash3-fill h3"
+                                data-placement="bottom" title="Supprimer l'étudiant"></i></a>
+                    </td>
+                </tr>
+                }
+
+
+
+
+
+            </tbody>
+
+        </table>
+        <nav>
+            <ul class="pagination">
+                @if (pagedEtudiantList.currentPage == 0) {
+                <li class="page-item disabled">
+                    <span class="page-link">Précedente</span>
+                </li>
+                }@else {
+                <li class="page-item" (click)="onPrecedent(pagedEtudiantList.currentPage - 1)">
+                    <span class="page-link">Précedente</span>
+                </li>
+                }
+
+
+                @if(pagedEtudiantList.totalPages > ( 7 * compteurGroupPage)){
+                @let pageToShow = 7;
+
+                @for ( item of [].constructor(pageToShow); track item; let page = $index) {
+                <li class="page-item" (click)="onChangePage(page + (7 * (compteurGroupPage - 1)))"
+                    [ngClass]="{'active': (page  + (7 * (compteurGroupPage - 1)))== pagedEtudiantList.currentPage}">
+                    <span class="page-link">{{ page +
+                        1 + (7 * (compteurGroupPage - 1))}}</span>
+                </li>
+                }
+                }@else {
+                @let pageToshow = pagedEtudiantList.totalPages - (7 * (compteurGroupPage - 1));
+
+                @for ( item of [].constructor(pageToshow); track item; let page = $index) {
+                <li class="page-item" (click)="onChangePage(page + (7 * (compteurGroupPage - 1)))"
+                    [ngClass]="{'active': (page + (7 * (compteurGroupPage - 1))) == pagedEtudiantList.currentPage}">
+                    <span class="page-link">{{ page +
+                        1 + (7 * (compteurGroupPage - 1))}}</span>
+                </li>
+                }
+                }
+
+                @if (pagedEtudiantList.currentPage == pagedEtudiantList.totalPages - 1) {
+                <li class="page-item disabled">
+                    <span class="page-link">Suivante</span>
+                </li>
+                }@else {
+                <li class="page-item" (click)="onSuivant(pagedEtudiantList.currentPage + 1)">
+                    <span class="page-link">Suivante</span>
+                </li>
+                }
+            </ul>
+        </nav>
+        }
+    </div>
+</div>

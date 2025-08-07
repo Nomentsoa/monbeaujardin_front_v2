@@ -119,6 +119,7 @@ export class EtudiantAjoutComponent implements OnInit {
       pereFormGroup: this.pereFormGroup,
       tuteurFormGroup: this.tuteurFormGroup,
       noteSupplementaireEtudiant: new FormControl(''),
+      nombreFraternite: new FormControl('0'),
     });
 
     this.isMereInconnuFormControl.valueChanges.subscribe((value) => {
@@ -174,6 +175,11 @@ export class EtudiantAjoutComponent implements OnInit {
 
     this.setMereFormGroup();
     this.setPereFormGroup();
+
+    // si le champs est vide on set la valeur a zero 0
+    if (valueMainForm.nombreFraternite === '') {
+      valueMainForm.nombreFraternite = 0;
+    }
     // this.setTuteurFormGroup();
     console.log('is main valid => ' + this.mainForm.valid);
     if (this.mainForm.valid) {
@@ -194,6 +200,7 @@ export class EtudiantAjoutComponent implements OnInit {
         telephoneTuteur: this.tuteurFormGroup.get('telephoneTuteur')?.value,
         professionTuteur: this.tuteurFormGroup.get('professionTuteur')?.value,
         noteSupplementaire: valueMainForm.noteSupplementaire,
+        nombreFraternite: valueMainForm.nombreFraternite,
       };
 
       console.log(etudiantDetail);
