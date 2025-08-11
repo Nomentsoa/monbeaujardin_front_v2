@@ -25,12 +25,23 @@ import { ToastrService } from 'ngx-toastr';
 export class EtudiantAjoutComponent implements OnInit {
   numeroRegexp: RegExp = /^0(32|33|34|37|38|39)[0-9]{7}$/;
   genres = [
-    { value: 'M', label: 'Garçon' },
+    { value: 'G', label: 'Garçon' },
     { value: 'F', label: 'Fille' },
   ];
-
   genreEtudiantFormControl = new FormControl(this.genres.at(0)?.value);
 
+  etats = [
+    { value: 'I', label: 'Inscription' },
+    { value: 'A', label: 'Ancien' },
+  ];
+
+  etatEtudiantFormControl = new FormControl(this.etats.at(0)?.value);
+
+  anneeInscriptionFormControl = new FormControl(new Date().getFullYear(), [
+    Validators.required,
+    Validators.pattern(/^[0-9]{4}$/),
+  ]);
+  anneeInscriptionErreur!: string;
   matriculFormControl = new FormControl('', Validators.required);
   matriculErreur!: string;
 
@@ -104,7 +115,9 @@ export class EtudiantAjoutComponent implements OnInit {
 
     console.log('set main form');
     this.mainForm = new FormGroup({
+      anneeInscription: this.anneeInscriptionFormControl,
       matriculEtudiant: this.matriculFormControl,
+      etatEtudiant: this.etatEtudiantFormControl,
       nomEtudiant: this.nomEtudiantFormControl,
       prenomEtudiant: new FormControl('', Validators.required),
       dateDeNaissanceEtudiant: new FormControl('', [
@@ -139,6 +152,15 @@ export class EtudiantAjoutComponent implements OnInit {
     console.log('submit des valeurs dans nouvel etudiant');
 
     let valueMainForm = this.mainForm.value;
+
+    if (this.mainForm.get('anneeInscription')?.hasError('required')) {
+      this.anneeInscriptionErreur = 'Champs date inscription obligatoire';
+    } else if (this.mainForm.get('anneeInscription')?.hasError('pattern')) {
+      this.anneeInscriptionErreur =
+        'Champs date inscription ne respecte pas le format (ex:2022)';
+    } else {
+      this.anneeInscriptionErreur = '';
+    }
 
     if (valueMainForm.matriculEtudiant === '') {
       this.matriculErreur = 'Champs matricul obligatoire';
@@ -184,7 +206,9 @@ export class EtudiantAjoutComponent implements OnInit {
     console.log('is main valid => ' + this.mainForm.valid);
     if (this.mainForm.valid) {
       let etudiantDetail: EtudiantDetail = {
+        anneeInscription: valueMainForm.anneeInscription,
         matricule: String(Number(valueMainForm.matriculEtudiant)),
+        etat: valueMainForm.etatEtudiant,
         nom: valueMainForm.nomEtudiant,
         prenom: valueMainForm.prenomEtudiant,
         dateNaissance: valueMainForm.dateDeNaissanceEtudiant,
@@ -216,7 +240,7 @@ export class EtudiantAjoutComponent implements OnInit {
             let newMatricul = Number(valueMainForm.matriculEtudiant) + 1;
             this.mainForm.get('matricul');
             this.mainForm.get('matriculEtudiant')?.setValue(newMatricul);
-            this.mainForm.get('genreEtudiant')?.setValue('M');
+            this.mainForm.get('genreEtudiant')?.setValue('G');
             this.toastr.success('Etudiant enregistré.', 'Information');
           }
         });

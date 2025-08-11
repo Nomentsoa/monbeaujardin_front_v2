@@ -2,31 +2,32 @@
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link active">Information nouvel Etudiant</a>
+                <a class="nav-link active">Information Sur l'étudiant</a>
             </li>
         </ul>
     </div>
     <div class="card-body">
+        @if(etudiantDetail$ | async; as etudiantDetail){
         <form class="row mx-5" [formGroup]="mainForm" (submit)="onSubmit()">
 
-            <div class="container">
 
+            <div class="container">
                 <div class="row">
-                    <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'anneeInscription'"
-                        [messageErreur]="anneeInscriptionErreur" [label]="'Année d\'inscription'" [type]="'number'" />
-                    <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'matriculEtudiant'"
-                        [messageErreur]="matriculErreur" [label]="'Numéro matricul'" [type]="'number'" />
-                    <div class="col-2">
-                        <label for="inputEmail4" class="form-label">Etat de l'etudiant</label>
-                        <select class="form-select" id="specificSizeSelect" [formControl]="etatEtudiantFormControl">
-                            @for (etat of etats; track etat.value) {
-                            <option [value]="etat.value">{{ etat.label}}</option>
-                            }
-                        </select>
-                    </div>
+                    <div class="col-5"></div>
+                    @if (etudiantDetail.sexe == 'F') {
+                    <img src="profilFille.png" class="rounded-circle col-1" alt="profil Utilisateur">
+                    }@else {
+                    <img src="profilGarcon.png" class="rounded-circle col-1" alt="profil Utilisateur">
+                    }
+
                 </div>
 
-                <div class="row mt-2">
+                <div class="row">
+                    <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'matriculEtudiant'"
+                        [messageErreur]="''" [label]="'Numéro matricul'" [type]="'text'" />
+                </div>
+
+                <!-- <div class="row mt-2">
                     <app-input-mbj class="col-6" [form]="mainForm" [formControlNameMBJ]="'nomEtudiant'"
                         [messageErreur]="nomErreur" [label]="'Nom'" />
 
@@ -118,7 +119,7 @@
                         <textarea class="form-control" id="noteSupplementaireEtudiant"
                             formControlName="noteSupplementaireEtudiant"> </textarea>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row mt-4" style="align-items: center;">
                     <div class="col-7">
@@ -133,5 +134,7 @@
 
 
         </form>
+        }
+
     </div>
 </div>

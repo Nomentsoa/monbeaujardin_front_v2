@@ -5,11 +5,12 @@ import { Observable, tap } from 'rxjs';
 import { PagedEtudiantList } from '../../../models/etudiant/pagedEtudiantList.model';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-etudiant-list',
   standalone: true,
-  imports: [AsyncPipe, FormsModule, NgClass],
+  imports: [AsyncPipe, FormsModule, NgClass, RouterLink],
   templateUrl: './etudiant-list.component.html',
   styleUrl: './etudiant-list.component.scss',
 })
@@ -17,6 +18,7 @@ export class EtudiantListComponent implements OnInit {
   recherche: string = '';
   currentPage: number = 0;
   pageSize = 2;
+  etat: string = 'I';
 
   compteurGroupPage: number = 1;
   totalPage!: number;
@@ -34,19 +36,7 @@ export class EtudiantListComponent implements OnInit {
 
   onCherche() {
     console.log('la valeur de la recherche => ' + this.recherche);
-    this.getList(this.recherche, this.currentPage);
-    this.pagedEtudiantListObservable$ = this.etudiantService
-      .getPagedEtudiantList({
-        keyword: this.recherche,
-        page: 0,
-        size: this.pageSize,
-      })
-      .pipe(
-        tap((value) => {
-          this.totalPage = value.totalPages;
-          this.currentPage = value.currentPage;
-        })
-      );
+    this.getList(this.recherche, 0);
   }
 
   onChangePage(page: number) {
@@ -73,6 +63,7 @@ export class EtudiantListComponent implements OnInit {
     this.pagedEtudiantListObservable$ = this.etudiantService
       .getPagedEtudiantList({
         keyword: keyWord,
+        etat: this.etat,
         page: curruntPage,
         size: this.pageSize,
       })
@@ -82,5 +73,15 @@ export class EtudiantListComponent implements OnInit {
           this.currentPage = value.currentPage;
         })
       );
+  }
+
+  onInscritEtudiant() {
+    this.etat = 'I';
+    this.getList(this.recherche, this.currentPage);
+  }
+
+  onAncienEtudiant() {
+    this.etat = 'A';
+    this.getList(this.recherche, this.currentPage);
   }
 }
