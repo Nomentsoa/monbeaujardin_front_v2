@@ -14,38 +14,44 @@
             <div class="container">
                 <div class="row">
                     <div class="col-5"></div>
+                    @if(etudiantDetail.image == null){
                     @if (etudiantDetail.sexe == 'F') {
                     <img src="profilFille.png" class="rounded-circle col-1" alt="profil Utilisateur">
                     }@else {
                     <img src="profilGarcon.png" class="rounded-circle col-1" alt="profil Utilisateur">
                     }
+                    }@else {
+                    <img [src]="etudiantDetail.image" class="rounded-circle col-1" alt="profil Utilisateur">
+                    }
+
 
                 </div>
 
                 <div class="row">
                     <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'matriculEtudiant'"
                         [messageErreur]="''" [label]="'Numéro matricul'" [type]="'text'" />
+                    <div class="col-2">
+                        <label for="inputEmail4" class="form-label">Etat de l'etudiant</label>
+                        <select class="form-select" id="specificSizeSelect" [formControl]="etatEtudiantFormControl">
+                            @for (etat of etats; track etat.value) {
+                            <option [value]="etat.value">{{ etat.label}}</option>
+                            }
+                        </select>
+                    </div>
                 </div>
 
-                <!-- <div class="row mt-2">
+                <div class="row mt-2">
                     <app-input-mbj class="col-6" [form]="mainForm" [formControlNameMBJ]="'nomEtudiant'"
-                        [messageErreur]="nomErreur" [label]="'Nom'" />
+                        [messageErreur]="''" [label]="'Nom'" />
 
                     <app-input-mbj class="col-6" [form]="mainForm" [formControlNameMBJ]="'prenomEtudiant'"
-                        [messageErreur]="prenomErreur" [label]="'Prénom(s)'" />
+                        [messageErreur]="''" [label]="'Prénom(s)'" />
                 </div>
 
                 <div class="row mt-2">
                     <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'dateDeNaissanceEtudiant'"
-                        [messageErreur]="dateNaissanceErreur" [label]="'Date de naissance'" [maxLength]="10" />
-                    <div class="col-2">
-                        <label for="inputEmail4" class="form-label">Genre</label>
-                        <select class="form-select" id="specificSizeSelect" [formControl]="genreEtudiantFormControl">
-                            @for (genre of genres; track genre.value) {
-                            <option [value]="genre.value">{{ genre.label}}</option>
-                            }
-                        </select>
-                    </div>
+                        [messageErreur]="''" [label]="'Date de naissance'" [maxLength]="10" />
+
                     <app-input-mbj class="col-2" [form]="mainForm" [formControlNameMBJ]="'nombreFraternite'"
                         [messageErreur]="''" [label]="'Nombre de frère et de soeur'" [maxLength]="2"
                         [type]="'number'" />
@@ -55,59 +61,42 @@
                         [messageErreur]="adresseErreur" [label]="'Adresse'" />
                 </div>
 
-                <div class="col-12 mt-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="checkMere"
-                            [formControl]="isMereInconnuFormControl">
-                        <label class="form-check-label" for="checkMere">
-                            Mere inconnue
-                        </label>
-                    </div>
-                </div>
 
-                @if (!isMereInconnu) {
-                <div class="row" [formGroup]="mereFormGroup">
-                    <app-input-mbj class="col-4" [form]="mereFormGroup" [formControlNameMBJ]="'nomMere'"
-                        [messageErreur]="nomMereErreur" [label]="'Nom complet Mére'" />
-                    <app-input-mbj class="col-4" [form]="mereFormGroup" [formControlNameMBJ]="'telephoneMere'"
+                @if (etudiantDetail.nomMere) {
+                <div class="row mt-2">
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'nomMere'" [messageErreur]="''"
+                        [label]="'Nom complet Mére'" />
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'telephoneMere'"
                         [messageErreur]="telephoneMereErreur" [label]="'Téléphone Mére'" [maxLength]="10"
                         [type]="'number'" />
-                    <app-input-mbj class="col-4" [form]="mereFormGroup" [formControlNameMBJ]="'professionMere'"
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'professionMere'"
                         [messageErreur]="''" [label]="'Profession Mére'" />
                 </div>
                 }
 
-                <div class="col-12 mt-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck"
-                            [formControl]="isPereInconnuFormControl">
-                        <label class="form-check-label" for="gridCheck">
-                            Pére inconnu
-                        </label>
-                    </div>
-                </div>
 
-                @if (!isPereInconnu) {
-                <div class="row" [formGroup]="pereFormGroup">
-                    <app-input-mbj class="col-4" [form]="pereFormGroup" [formControlNameMBJ]="'nomPere'"
-                        [messageErreur]="nomPereErreur" [label]="'Nom complet Pére'" />
-                    <app-input-mbj class="col-4" [form]="pereFormGroup" [formControlNameMBJ]="'telephonePere'"
+
+                @if (etudiantDetail.nomPere) {
+                <div class="row mt-2">
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'nomPere'" [messageErreur]="''"
+                        [label]="'Nom complet Pére'" />
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'telephonePere'"
                         [messageErreur]="telephonePereErreur" [label]="'Téléphone Pére'" [maxLength]="10"
                         [type]="'number'" />
-                    <app-input-mbj class="col-4" [form]="pereFormGroup" [formControlNameMBJ]="'professionPere'"
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'professionPere'"
                         [messageErreur]="''" [label]="'Profession Pére'" />
                 </div>
                 }
 
-                @if(isMereInconnu && isPereInconnu){
+                @if(etudiantDetail.nomTuteur){
                 <div class="mt-2"><ins>Information à propos du/de la tuteur(trice)</ins> </div>
-                <div class="row" [formGroup]="tuteurFormGroup">
-                    <app-input-mbj class="col-4" [form]="tuteurFormGroup" [formControlNameMBJ]="'nomTuteur'"
-                        [messageErreur]="nomTuteurErreur" [label]="'Nom complet Tuteur(rice)'" />
-                    <app-input-mbj class="col-4" [form]="tuteurFormGroup" [formControlNameMBJ]="'telephoneTuteur'"
+                <div class="row">
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'nomTuteur'"
+                        [messageErreur]="''" [label]="'Nom complet Tuteur(rice)'" />
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'telephoneTuteur'"
                         [messageErreur]="telephoneTuteurErreur" [label]="'Téléphone Tuteur(rice)'" [maxLength]="10"
                         [type]="'number'" />
-                    <app-input-mbj class="col-4" [form]="tuteurFormGroup" [formControlNameMBJ]="'professionTuteur'"
+                    <app-input-mbj class="col-4" [form]="mainForm" [formControlNameMBJ]="'professionTuteur'"
                         [messageErreur]="''" [label]="'Profession Tuteur(rice)'" />
                 </div>
                 }
@@ -117,15 +106,16 @@
                     <div class="col">
                         <label for="noteSupplementaireEtudiant" class="form-label">Note supplementaire</label>
                         <textarea class="form-control" id="noteSupplementaireEtudiant"
-                            formControlName="noteSupplementaireEtudiant"> </textarea>
+                            formControlName="noteSupplementaire"> </textarea>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="row mt-4" style="align-items: center;">
                     <div class="col-7">
                     </div>
-                    <button type="button" class="btn btn-outline-danger col-2  me-md-5">Annuler</button>
-                    <button type="submit" class="btn btn-outline-success col-2">Enregistrer</button>
+                    <button type="button" class="btn btn-outline-danger col-2  me-md-5"
+                        (click)="onAnnuler()">Annuler</button>
+                    <button type="submit" class="btn btn-outline-success col-2">Modifier</button>
 
                 </div>
 

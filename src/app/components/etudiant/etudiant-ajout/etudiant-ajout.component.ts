@@ -32,7 +32,7 @@ export class EtudiantAjoutComponent implements OnInit {
 
   etats = [
     { value: 'I', label: 'Inscription' },
-    { value: 'A', label: 'Ancien' },
+    { value: 'A', label: 'Ancien(ne)' },
   ];
 
   etatEtudiantFormControl = new FormControl(this.etats.at(0)?.value);
@@ -131,7 +131,7 @@ export class EtudiantAjoutComponent implements OnInit {
       mereFormGroup: this.mereFormGroup,
       pereFormGroup: this.pereFormGroup,
       tuteurFormGroup: this.tuteurFormGroup,
-      noteSupplementaireEtudiant: new FormControl(''),
+      noteSupplementaire: new FormControl(''),
       nombreFraternite: new FormControl('0'),
     });
 

@@ -4,4 +4,5 @@ export interface EtudiantList {
   nom: string;
   prenom: string;
   dateNaissance: string;
+  etat: string;
 }

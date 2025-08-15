@@ -77,11 +77,13 @@ export class EtudiantListComponent implements OnInit {
 
   onInscritEtudiant() {
     this.etat = 'I';
+    this.currentPage = 0;
     this.getList(this.recherche, this.currentPage);
   }
 
   onAncienEtudiant() {
     this.etat = 'A';
+    this.currentPage = 0;
     this.getList(this.recherche, this.currentPage);
   }
 }

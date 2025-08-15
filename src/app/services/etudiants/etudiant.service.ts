@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { Reponse } from '../../models/reponse.model';
 import { PagedEtudiantList } from '../../models/etudiant/pagedEtudiantList.model';
+import { EtudiantUpdate } from '../../models/etudiant/etudiantUpdate.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +38,10 @@ export class EtudiantService {
 
   getEtudiantDetailById(id: number): Observable<EtudiantDetail> {
     return this.http.get<EtudiantDetail>(`${this.apiUrlEtudiant}/${id}`);
+  }
+
+  updateEtudiant(etudiantToUpdate: EtudiantUpdate): Observable<Reponse> {
+    console.log('update etudiant');
+    return this.http.patch<Reponse>(this.apiUrlEtudiant, etudiantToUpdate);
   }
 }

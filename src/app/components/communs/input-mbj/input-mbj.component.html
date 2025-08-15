@@ -1,7 +1,7 @@
 <div [formGroup]="form">
     <label for="inputMBJ" class="form-label">{{ label }}</label>
     <input type="text" class="form-control" [ngClass]="{'is-invalid': messageErreur}" id="inputMBJ"
-        [formControlName]="formControlNameMBJ" [maxlength]="maxLength" [type]="type">
+        [formControlName]="formControlNameMBJ" [maxlength]="maxLength" [type]="type" min="0">
     @if (messageErreur) {
     <h6 style="color: red;">{{ messageErreur }}</h6>
     }
