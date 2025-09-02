@@ -6,6 +6,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { EtudiantAjoutComponent } from './components/etudiant/etudiant-ajout/etudiant-ajout.component';
 import { matriculResolver } from './resolvers/matricul.resolver';
 import { EtudiantDetailComponent } from './components/etudiant/etudiant-detail/etudiant-detail.component';
+import { EcolageListComponent } from './components/ecolage/ecolage-list/ecolage-list.component';
 
 export const routes: Routes = [
   { path: '', component: AuthentificationComponent },
@@ -28,6 +29,10 @@ export const routes: Routes = [
       {
         path: 'etudiant/:id',
         component: EtudiantDetailComponent,
+      },
+      {
+        path: 'ecolage',
+        component: EcolageListComponent,
       },
     ],
   },

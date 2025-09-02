@@ -5,4 +5,6 @@ export interface EtudiantList {
   prenom: string;
   dateNaissance: string;
   etat: string;
+  image: string;
+  sexe: string;
 }

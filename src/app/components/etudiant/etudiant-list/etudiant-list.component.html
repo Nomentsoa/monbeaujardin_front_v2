@@ -11,61 +11,80 @@
     </div>
     <div class="card-body">
         <div class="input-group mb-3">
+
             <input type="text" class="form-control"
-                placeholder="Tapez ici le numero matricule ou nom ou prenom(s) à rechercher" [(ngModel)]="recherche">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)="onCherche()">Chercher</button>
-            </div>
+                placeholder="Tapez ici le numero matricule ou nom ou prenom(s) à rechercher"
+                aria-label="Recipient's username" aria-describedby="button-addon2" [(ngModel)]="recherche">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="onCherche()"><i
+                    class="bi bi-search h6" data-placement="bottom"></i> Chercher</button>
         </div>
         @if(pagedEtudiantListObservable$ | async ; as pagedEtudiantList; ){
 
-        <table class="table table-striped">
-            <thead class="text-center">
-                <tr>
-                    <th class="col-1">Numero Matricule</th>
-                    <th class="col-4">Nom</th>
-                    <th class="col-4">Prénom(s)</th>
-                    <th class="col-2">date de naissance</th>
-                    <th class="col-1">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="text-center align-items-center">
+        @for(etudiant of pagedEtudiantList.etudiants ; track etudiant.matricule){
 
 
+        <div class="card border-secondary mb-3">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10 fw-bolder">{{ etudiant.matricule }}</div>
+                    <div class="row col-2">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                            <a [routerLink]="['../etudiant/', etudiant.id]" routerLinkActive="router-link-active"
+                                style="color: rgb(31, 114, 1);"><i class="bi bi-eye h3" data-placement="bottom"
+                                    title="Voir détail étudiant"></i></a>
+                        </div>
+                        <div class="col-2">
+                            <a class="ms-2" routerLinkActive="router-link-active" style="color: rgb(17, 37, 152);"><i
+                                    class="bi bi-printer h3" data-placement="bottom"
+                                    title="Imprimer certificat de scolarité"></i></a>
+                        </div>
+                        <div class="col-2">
+                            @if(etudiant.etat === 'I'){
+                            <a href="" class="ms-2" style="color: rgb(213, 14, 14);"><i class="bi bi-person-x h3"
+                                    data-placement="bottom" title="Désinscrire l'étudiant"></i></a>
+                            }@else{
+                            <a href="" class="ms-2" style="color: rgb(17, 152, 29);"><i class="bi bi-person-add h3"
+                                    data-placement="bottom" title="Réinscrire l'étudiant"></i></a>
+                            }
 
-                @for(etudiant of pagedEtudiantList.etudiants ; track etudiant.matricule){
-                <tr>
-                    <th scope="row"> {{ etudiant.matricule }}</th>
-                    <td>{{ etudiant.nom }} {{etudiant.etat }}</td>
-                    <td>{{ etudiant.prenom }}</td>
-                    <td>{{ etudiant.dateNaissance }}</td>
-                    <td>
-                        <a [routerLink]="['../etudiant/', etudiant.id]" routerLinkActive="router-link-active"
-                            style="color: rgb(31, 114, 1);"><i class="bi bi-eye h3" data-placement="bottom"
-                                title="Voir détail étudiant"></i></a>
-                        <a class="ms-2" routerLinkActive="router-link-active" style="color: rgb(17, 37, 152);"><i
-                                class="bi bi-printer h3" data-placement="bottom"
-                                title="Imprimer certificat de scolarité"></i></a>
+                        </div>
 
-                        @if(etudiant.etat === 'I'){
-                        <a href="" class="ms-2" style="color: rgb(213, 14, 14);"><i class="bi bi-person-x h3"
-                                data-placement="bottom" title="Désinscrire l'étudiant"></i></a>
-                        }@else{
-                        <a href="" class="ms-2" style="color: rgb(17, 152, 29);"><i class="bi bi-person-add h3"
-                                data-placement="bottom" title="Réinscrire l'étudiant"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body text-secondary">
+                <div class="row" style="align-items: center;">
+                    <div class="col-1">
+                        @if(etudiant.image === null || etudiant.image ===''){
+                        @if(etudiant.sexe === 'G'){
+                        <img src="profilGarcon.png" class="rounded-circle" [alt]="etudiant.nom" style="width: 50px;">
+                        }@else {
+                        <img src="profilFille.png" class="rounded-circle" [alt]="etudiant.nom" style="width: 50px;">
+                        }
+                        }@else {
+                        <img [src]="etudiant.image" class="rounded-circle" [alt]="etudiant.nom" style="width: 50px;">
                         }
 
-                    </td>
-                </tr>
-                }
+
+                    </div>
+                    <div class=" col-5 fw-bolder">{{ etudiant.nom }} {{ etudiant.prenom }}</div>
+                    <div class="col-4" style="display: grid; justify-items:end;">
+                        {{ etudiant.dateNaissance }}
+                    </div>
+                    <div class="col-2" style="display: grid; justify-items:end;">
+                        Classe: 7e
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        }
 
 
 
-
-
-            </tbody>
-
-        </table>
         <nav>
             <ul class="pagination">
                 @if (pagedEtudiantList.currentPage == 0) {
