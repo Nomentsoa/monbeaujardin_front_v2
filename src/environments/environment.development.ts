@@ -49,4 +49,6 @@ export const environment = {
     },
   ],
   anneeCreationMonBeauJardin: 2005,
+  pageSizeList: 10,
+  nombreDePageAffiche: 7,
 };

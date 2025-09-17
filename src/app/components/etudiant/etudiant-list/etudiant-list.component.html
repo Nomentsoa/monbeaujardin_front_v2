@@ -98,24 +98,24 @@
                 }
 
 
-                @if(pagedEtudiantList.totalPages > ( 7 * compteurGroupPage)){
-                @let pageToShow = 7;
+                @if(pagedEtudiantList.totalPages > ( nombreDePageAfficher * compteurGroupPage)){
+                @let pageToShow = nombreDePageAfficher;
 
                 @for ( item of [].constructor(pageToShow); track item; let page = $index) {
-                <li class="page-item" (click)="onChangePage(page + (7 * (compteurGroupPage - 1)))"
-                    [ngClass]="{'active': (page  + (7 * (compteurGroupPage - 1)))== pagedEtudiantList.currentPage}">
+                <li class="page-item" (click)="onChangePage(page + (nombreDePageAfficher * (compteurGroupPage - 1)))"
+                    [ngClass]="{'active': (page  + (nombreDePageAfficher * (compteurGroupPage - 1)))== pagedEtudiantList.currentPage}">
                     <span class="page-link">{{ page +
-                        1 + (7 * (compteurGroupPage - 1))}}</span>
+                        1 + (nombreDePageAfficher * (compteurGroupPage - 1))}}</span>
                 </li>
                 }
                 }@else {
-                @let pageToshow = pagedEtudiantList.totalPages - (7 * (compteurGroupPage - 1));
+                @let pageToshow = pagedEtudiantList.totalPages - (nombreDePageAfficher * (compteurGroupPage - 1));
 
                 @for ( item of [].constructor(pageToshow); track item; let page = $index) {
-                <li class="page-item" (click)="onChangePage(page + (7 * (compteurGroupPage - 1)))"
-                    [ngClass]="{'active': (page + (7 * (compteurGroupPage - 1))) == pagedEtudiantList.currentPage}">
+                <li class="page-item" (click)="onChangePage(page + (nombreDePageAfficher * (compteurGroupPage - 1)))"
+                    [ngClass]="{'active': (page + (nombreDePageAfficher * (compteurGroupPage - 1))) == pagedEtudiantList.currentPage}">
                     <span class="page-link">{{ page +
-                        1 + (7 * (compteurGroupPage - 1))}}</span>
+                        1 + (nombreDePageAfficher * (compteurGroupPage - 1))}}</span>
                 </li>
                 }
                 }

@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment.development';
 import { Reponse } from '../../models/reponse.model';
 import { PagedEtudiantList } from '../../models/etudiant/pagedEtudiantList.model';
 import { EtudiantUpdate } from '../../models/etudiant/etudiantUpdate.model';
+import { PagedEtudiantWithEcolageList } from '../../models/etudiant/pagedEtudiantWithEcolageList.model';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +44,28 @@ export class EtudiantService {
   updateEtudiant(etudiantToUpdate: EtudiantUpdate): Observable<Reponse> {
     console.log('update etudiant');
     return this.http.patch<Reponse>(this.apiUrlEtudiant, etudiantToUpdate);
+  }
+
+  getPagedEtudiantWithEcolage(
+    keyword: string,
+    etat: string,
+    page: number,
+    size: number,
+    mois: number,
+    annee: number
+  ): Observable<PagedEtudiantWithEcolageList> {
+    console.log('Récuperation de la paged list etudiant with ecolage');
+    let params = new HttpParams()
+      .set('keyword', keyword)
+      .set('etat', etat)
+      .set('page', page)
+      .set('size', size)
+      .set('mois', mois)
+      .set('annee', annee);
+
+    return this.http.get<PagedEtudiantWithEcolageList>(
+      `${this.apiUrlEtudiant}/ecolage`,
+      { params: params }
+    );
   }
 }

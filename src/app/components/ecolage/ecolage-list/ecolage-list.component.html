@@ -1,12 +1,17 @@
 <div class="card">
+
     <div class="card-header">
+
+        asdfadf
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <span class="nav-link active">Ecolages non payés</span>
+                <span class="nav-link active">Ecolages</span>
             </li>
 
         </ul>
     </div>
+
+
     <div class="card-body">
 
 
@@ -29,61 +34,113 @@
                     class="bi bi-search h6" data-placement="bottom"></i>
                 Chercher</button>
         </div>
+        @if (pagedEtudiantWithEcolageList$ | async; as pagedEtudiantList) {
+        @for (etudiant of pagedEtudiantList.etudiantEcolages; track etudiant.matricule) {
 
-
-        <div class="card border-secondary mb-3">
+        <div class="card  mb-3" ngClass="border-{{testEtatEcolage(etudiant)}}">
             <div class="card-header">
                 <div class="row">
-                    <div class=" col-11">25/28-F</div>
+                    <div class=" col-11">{{ etudiant.matricule }}</div>
                     <div class="col-1" style="display: grid; justify-items:end;">
 
-                        <button type="button" class="btn btn-outline-success"> <i class="bi bi-currency-dollar h6"
-                                data-placement="bottom" title="Payer l'écolage"></i> Payer</button>
+                        <button type="button" class="btn btn-outline-success" (click)="showPopupPayer(etudiant)"> <i
+                                class="bi bi-currency-dollar h6" data-placement="bottom" title="Payer l'écolage"></i>
+                            Payer</button>
                     </div>
 
                 </div>
 
             </div>
 
-            <div class="card-body text-secondary">
+
+            <div class="card-body" ngClass="text-{{testEtatEcolage(etudiant)}}">
+
                 <div class="row" style="align-items: center;">
                     <div class="col-1">
-                        @if(true){
-                        @if(true){
+                        @if(etudiant.image == null || etudiant.image != ''){
+                        @if(etudiant.sexe != 'F'){
                         <img src="profilGarcon.png" class="rounded-circle" style="width: 50px;">
                         }@else {
                         <img src="profilFille.png" class="rounded-circle" style="width: 50px;">
                         }
                         }@else {
-                        <img [src]="null" class="rounded-circle" tyle="width: 50px;">
+                        <img [src]="etudiant.image" class="rounded-circle" tyle="width: 50px;">
                         }
 
 
                     </div>
-                    <div class=" col-5 fw-bolder">Rabesandratana Laza Nomentsoa</div>
+                    <div class=" col-5 fw-bolder">{{etudiant.nom}} {{ etudiant.prenom}}</div>
                     <div class="col-4" style="display: grid; justify-items:end;">
-                        11/09/2020
+                        {{ etudiant.dateNaissance }}
                     </div>
                     <div class="col-2" style="display: grid; justify-items:end;">
                         Classe: 7e
                     </div>
                 </div>
             </div>
+
+
+
         </div>
-        <!-- <div class="card border-warning mb-3">
-            <div class="card-header">25/28-F</div>
-            <div class="card-body text-warning">
-                <h5 class="card-title">Rabesandratana Laza Nomentsoa</h5>
-                <p class="card-text">Class: 7e</p>
-            </div>
-        </div>
-        <div class="card border-danger mb-3">
-            <div class="card-header">25/28-F</div>
-            <div class="card-body text-danger">
-                <h5 class="card-title">Rabesandratana Laza Nomentsoa</h5>
-                <p class="card-text">Class: 7e</p>
-            </div>
-        </div> -->
+
+
+        }
+
+
+        <nav>
+            <ul class="pagination">
+                @if (pagedEtudiantList.currentPage == 0) {
+                <li class="page-item disabled">
+                    <span class="page-link">Précedente</span>
+                </li>
+                }@else {
+                <li class="page-item" (click)="onPrecedent(pagedEtudiantList.currentPage - 1)">
+                    <span class="page-link">Précedente</span>
+                </li>
+                }
+
+
+                @if(pagedEtudiantList.totalPages > ( nombreDePageAfficher * compteurGroupPage)){
+                @let pageToShow = nombreDePageAfficher;
+
+                @for ( item of [].constructor(pageToShow); track item; let page = $index) {
+                <li class="page-item" (click)="onChangePage(page + (nombreDePageAfficher * (compteurGroupPage - 1)))"
+                    [ngClass]="{'active': (page  + (nombreDePageAfficher * (compteurGroupPage - 1)))== pagedEtudiantList.currentPage}">
+                    <span class="page-link">{{ page +
+                        1 + (nombreDePageAfficher * (compteurGroupPage - 1))}}</span>
+                </li>
+                }
+                }@else {
+                @let pageToshow = pagedEtudiantList.totalPages - (nombreDePageAfficher * (compteurGroupPage - 1));
+
+                @for ( item of [].constructor(pageToshow); track item; let page = $index) {
+                <li class="page-item" (click)="onChangePage(page + (nombreDePageAfficher * (compteurGroupPage - 1)))"
+                    [ngClass]="{'active': (page + (nombreDePageAfficher * (compteurGroupPage - 1))) == pagedEtudiantList.currentPage}">
+                    <span class="page-link">{{ page +
+                        1 + (nombreDePageAfficher * (compteurGroupPage - 1))}}</span>
+                </li>
+                }
+                }
+
+                @if (pagedEtudiantList.currentPage == pagedEtudiantList.totalPages - 1) {
+                <li class="page-item disabled">
+                    <span class="page-link">Suivante</span>
+                </li>
+                }@else {
+                <li class="page-item" (click)="onSuivant(pagedEtudiantList.currentPage + 1)">
+                    <span class="page-link">Suivante</span>
+                </li>
+                }
+            </ul>
+        </nav>
+        }
+
 
     </div>
 </div>
+
+
+
+@if (isPopupVisible) {
+<app-modal-payer-ecolage (close)="hidePopupPayer()"></app-modal-payer-ecolage>
+}

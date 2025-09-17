@@ -6,6 +6,7 @@ import { PagedEtudiantList } from '../../../models/etudiant/pagedEtudiantList.mo
 import { AsyncPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-etudiant-list',
@@ -17,7 +18,8 @@ import { RouterLink } from '@angular/router';
 export class EtudiantListComponent implements OnInit {
   recherche: string = '';
   currentPage: number = 0;
-  pageSize = 2;
+  pageSize = environment.pageSizeList;
+  nombreDePageAfficher = environment.nombreDePageAffiche;
   etat: string = 'I';
 
   compteurGroupPage: number = 1;

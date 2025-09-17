@@ -1,11 +1,13 @@
-import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { matriculResolver } from './matricul.resolver';
+import { TestBed } from '@angular/core/testing';
 
 describe('matriculResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => matriculResolver(...resolverParameters));
+  const executeResolver: ResolveFn<string> = (...resolverParameters) =>
+    TestBed.runInInjectionContext(() =>
+      matriculResolver(...resolverParameters)
+    );
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

@@ -1,8 +1,6 @@
+import { PagedListParent } from '../pagedListParent.model';
 import { EtudiantList } from './etudiantList.model';
 
-export interface PagedEtudiantList {
-  currentPage: number;
-  totalPages: number;
-  pageSize: number;
+export interface PagedEtudiantList extends PagedListParent {
   etudiants: Array<EtudiantList>;
 }

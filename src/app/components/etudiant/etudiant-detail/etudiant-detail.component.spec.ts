@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EtudiantDetailComponent } from './etudiant-detail.component';
+import { provideHttpClient } from '@angular/common/http';
+import { ActivatedRoute, provideRouter } from '@angular/router';
+import { provideToastr } from 'ngx-toastr';
 
 describe('EtudiantDetailComponent', () => {
   let component: EtudiantDetailComponent;
@@ -8,9 +11,9 @@ describe('EtudiantDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EtudiantDetailComponent]
-    })
-    .compileComponents();
+      providers: [provideHttpClient(), provideRouter([]), provideToastr()],
+      imports: [EtudiantDetailComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EtudiantDetailComponent);
     component = fixture.componentInstance;

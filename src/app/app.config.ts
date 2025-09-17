@@ -7,6 +7,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { provideToastr } from 'ngx-toastr';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     CookieService,
     provideToastr(),
-    provideNoopAnimations(),
+    provideNoopAnimations(), provideAnimationsAsync(),
   ],
 };

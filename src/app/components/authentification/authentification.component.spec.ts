@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthentificationComponent } from './authentification.component';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('AuthentificationComponent', () => {
   let component: AuthentificationComponent;
@@ -8,9 +9,9 @@ describe('AuthentificationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuthentificationComponent]
-    })
-    .compileComponents();
+      providers: [provideHttpClient()],
+      imports: [AuthentificationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AuthentificationComponent);
     component = fixture.componentInstance;
