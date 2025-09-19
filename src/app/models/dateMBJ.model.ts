@@ -1,5 +1,5 @@
-export interface DateMbJ {
-  jourCourant: number;
-  moisCourant: number;
-  anneeCourante: number;
+export class DateMbJ {
+  jourCourant?: number;
+  moisCourant?: number;
+  anneeCourante?: number;
 }

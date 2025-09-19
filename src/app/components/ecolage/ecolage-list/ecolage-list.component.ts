@@ -12,12 +12,8 @@ import { EtudiantService } from '../../../services/etudiants/etudiant.service';
 import { EcolageService } from '../../../services/ecolage/ecolage.service';
 import { PagedEtudiantWithEcolageList } from '../../../models/etudiant/pagedEtudiantWithEcolageList.model';
 import { EtudiantItemWithEcolage } from '../../../models/etudiant/etudiantItemWithEcolage.model';
+import { Reponse } from '../../../models/reponse.model';
 
-import { MatInput } from '@angular/material/input';
-import {
-  MatDateRangePicker,
-  MatDatepicker,
-} from '@angular/material/datepicker';
 @Component({
   selector: 'app-ecolage-list',
   standalone: true,
@@ -29,7 +25,7 @@ export class EcolageListComponent implements OnInit {
   isPopupVisible = false;
 
   moisDeLannee = environment.moisDeLanne;
-  dateCourant!: DateMbJ;
+  dateSelected: DateMbJ = new DateMbJ();
 
   debutMonBeauJardin = environment.anneeCreationMonBeauJardin;
   timeStampsNow!: number;
@@ -41,7 +37,7 @@ export class EcolageListComponent implements OnInit {
   nombreDePageAfficher = environment.nombreDePageAffiche;
   recherche: string = '';
   currentPage: number = 0;
-  pageSize = environment.pageSizeList;
+  pageSize = 1;
   etat: string = 'I';
 
   compteurGroupPage: number = 1;
@@ -50,6 +46,7 @@ export class EcolageListComponent implements OnInit {
   pagedEtudiantWithEcolageList$!: Observable<PagedEtudiantWithEcolageList>;
 
   ngOnInit(): void {
+    this.dateSelected = new DateMbJ();
     // récupération de la date pour l'affichage dans les champs
     const dateNow = new Date();
 
@@ -67,6 +64,9 @@ export class EcolageListComponent implements OnInit {
     this.moisSelected =
       dateNow.getMonth() + 1 == 8 ? 9 : dateNow.getMonth() + 1;
     this.anneeSelected = dateNow.getFullYear() + '';
+
+    this.dateSelected.jourCourant = dateNow.getDate();
+
     console.log(
       dateNow.getDate() + '/' + this.moisSelected + '/' + dateNow.getFullYear()
     );
@@ -83,6 +83,9 @@ export class EcolageListComponent implements OnInit {
 
   showPopupPayer(etudiantDetail: EtudiantList) {
     this.etudiantDetailFromList = etudiantDetail;
+    this.dateSelected.anneeCourante = Number(this.anneeSelected);
+    this.dateSelected.moisCourant = this.moisSelected;
+
     this.isPopupVisible = true;
   }
 
@@ -192,5 +195,14 @@ export class EcolageListComponent implements OnInit {
 
   jourEnMilliseconde(nombreJour: number): number {
     return nombreJour * 24 * 60 * 60 * 1000;
+  }
+
+  onReponseValuePayEcolage(reponse: Reponse) {
+    console.log('mahita reponse tsr mits ato indrayds');
+    console.log(
+      'reponse => ' + reponse.message + 'isErreur ' + reponse.isError
+    );
+
+    this.getListEtudiant(this.recherche, this.currentPage);
   }
 }

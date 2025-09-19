@@ -2,7 +2,7 @@
 
     <div class="card-header">
 
-        asdfadf
+
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
                 <span class="nav-link active">Ecolages</span>
@@ -142,5 +142,6 @@
 
 
 @if (isPopupVisible) {
-<app-modal-payer-ecolage (close)="hidePopupPayer()"></app-modal-payer-ecolage>
+<app-modal-payer-ecolage (close)="hidePopupPayer()" (reponseValue)="onReponseValuePayEcolage($event)"
+    [etudiantDetail]="etudiantDetailFromList" [dateCourant]="dateSelected"></app-modal-payer-ecolage>
 }
