@@ -13,6 +13,7 @@ import { EcolageService } from '../../../services/ecolage/ecolage.service';
 import { PagedEtudiantWithEcolageList } from '../../../models/etudiant/pagedEtudiantWithEcolageList.model';
 import { EtudiantItemWithEcolage } from '../../../models/etudiant/etudiantItemWithEcolage.model';
 import { Reponse } from '../../../models/reponse.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ecolage-list',
@@ -37,7 +38,7 @@ export class EcolageListComponent implements OnInit {
   nombreDePageAfficher = environment.nombreDePageAffiche;
   recherche: string = '';
   currentPage: number = 0;
-  pageSize = 1;
+  pageSize = environment.pageSizeList;
   etat: string = 'I';
 
   compteurGroupPage: number = 1;
@@ -75,7 +76,10 @@ export class EcolageListComponent implements OnInit {
     this.getListEtudiant(this.recherche, 0);
   }
 
-  constructor(private etudiantService: EtudiantService) {}
+  constructor(
+    private etudiantService: EtudiantService,
+    private toastr: ToastrService
+  ) {}
 
   onRecherche() {
     this.getListEtudiant(this.recherche, 0);
@@ -203,6 +207,11 @@ export class EcolageListComponent implements OnInit {
       'reponse => ' + reponse.message + 'isErreur ' + reponse.isError
     );
 
-    this.getListEtudiant(this.recherche, this.currentPage);
+    if (reponse.isError)
+      this.toastr.error('Payement écolage Erreur.', 'Erreur');
+    else {
+      this.toastr.success(reponse.message, 'Information');
+      this.getListEtudiant(this.recherche, this.currentPage);
+    }
   }
 }
